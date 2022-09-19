@@ -57,3 +57,5 @@ class Likes(models.Model):
 class Profile(models.Model):
     name = models.ForeignKey(User, on_delete=models.Cascade)
     avatar = CloudinaryField('image')
+    category =models.ForeignKey(Category, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)

@@ -136,7 +136,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 cloudinary.config( 
-  cloud_name = "dplbydhjc", 
-  api_key = "298527427399494", 
-  api_secret = "r0YGmGZk-CKRICPCobLacI8Fl1I" 
+  cloud_name = config('CLOUDINARY_API_SECRETE'), 
+  api_key = config('CLOUDINARY_API_KEY') ,
+  api_secret = config('CLOUDINARY_API_SECRET')  
 )
