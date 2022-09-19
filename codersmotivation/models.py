@@ -27,7 +27,7 @@ class Post(models.Model):
   time_posted =models.DateTimeField(auto_now_add=True)
   author = models.ForeignKey(User, on_delete=models.CASCADE)
   likes = models.IntegerField(default=0)
-  
+
   
 
 
@@ -50,3 +50,10 @@ class Comment(models.Model):
     def __str__(self):
         return 'Comment {} by {}'.format(self.body, self.name)
 
+class Likes(models.Model):
+    post =models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Profile(models.Model):
+    name = models.ForeignKey(User, on_delete=models.Cascade)
+    avatar = CloudinaryField('image')
