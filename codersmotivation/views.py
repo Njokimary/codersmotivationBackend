@@ -8,6 +8,4 @@ def index(request):
     message="hello we are learning Django and we are enjoying it"
     return render(request,"index.html",{"message":message})
 
-def post:
-    post=data.post.all()
-    return render(request,"post".html",{"post":post})
+
