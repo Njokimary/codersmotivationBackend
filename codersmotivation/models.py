@@ -2,15 +2,7 @@ from tkinter import CASCADE
 from unicodedata import category
 from django.db import models
 from cloudinary.models import CloudinaryField
-from django.contrib.auth.models import AbstractUser
-
-# Create your models here.
-class User(AbstractUser):
-  #Boolean fields to select the type of account.
-  is_admin = models.BooleanField(default=False)
-  is_staff= models.BooleanField(default=False)
-  def __str__(self):
-      return self.username
+from authentication.models import User
 
 class Category(models.Model):
   category =models.CharField(max_length=20)
@@ -59,3 +51,5 @@ class Profile(models.Model):
     avatar = CloudinaryField('image')
     category =models.ForeignKey(Category, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    
