@@ -1,5 +1,4 @@
 from tkinter import CASCADE
-from unicodedata import category
 from django.db import models
 from cloudinary.models import CloudinaryField
 from authentication.models import User
@@ -18,38 +17,37 @@ class Post(models.Model):
   content =models.TextField
   time_posted =models.DateTimeField(auto_now_add=True)
   author = models.ForeignKey(User, on_delete=models.CASCADE)
-  likes = models.IntegerField(default=0)
+  like = models.IntegerField(default=0)
 
   
 
 
   def __str__(self):
-      return self.category
+      return self.title
 
 
   
 class Comment(models.Model):
     post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
-    name = models.CharField(max_length=80)
-    email = models.EmailField()
+    name = models.ForeignKey(User, on_delete=models.CASCADE)
     comment = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
-    active = models.BooleanField(default=False)
-
+    
     class Meta:
         ordering = ['created_on']
 
     def __str__(self):
-        return 'Comment {} by {}'.format(self.body, self.name)
+        return 'Comment {} by {}'.format(self.comment, self.name)
 
 class Likes(models.Model):
     post =models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Profile(models.Model):
-    name = models.ForeignKey(User, on_delete=models.Cascade)
+    name = models.ForeignKey(User, on_delete=models.CASCADE)
     avatar = CloudinaryField('image')
     category =models.ForeignKey(Category, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
-    
+    def __str__(self):
+      return self.name
