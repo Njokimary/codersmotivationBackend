@@ -1,27 +1,58 @@
 from django.shortcuts import render
-from serializer import UserRegistrationSerializer, LoginSerializer
+from authentication.serializer import  LoginSerializer
 from rest_auth.registration.views import RegisterView
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from rest_framework.response import Response
 from rest_framework.views import APIView 
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
+from rest_framework import status
+from authentication.serializer import UserSerializer
+from django.contrib.auth.models import User
 
 
 # Create your views here.
 
 def index(self):
-    return render(self,"index.html")
+    return render(self,"index2.html")
 
-class userRegistrationView(RegisterView):
-    serializer_class = UserRegistrationSerializer
+# class userRegistrationView(RegisterView):
+#     serializer_class = UserRegistrationSerializer
+#     def get_cleaned_data(self):
+#             data = super(UserRegistrationSerializer,self).get_cleaned_data()
+#             return data
 
-def check_user_acc(request):
-    tokens = Token.objects.filter(user=request.user)
-    for token in tokens:
-        user = Token.objects.get(key=token).user
+#     def save(self, request):
+#         user = super(UserRegistrationSerializer)
+#         user.save()
+#         return user
 
-    return user.manager
+# def check_user_acc(request):
+#     tokens = Token.objects.filter(user=request.user)
+#     for token in tokens:
+#         user = Token.objects.get(key=token).user
+
+#     return user.manager
+
+from rest_framework.authtoken.models import Token
+
+class UserCreate(APIView):
+    """ 
+    Creates the user. 
+    """
+
+    def post(self, request, format='json'):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            if user:
+                token = Token.objects.create(user=user)
+                json = serializer.data
+                json['token'] = token.key
+                return Response(json, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LoginView(APIView):
     permission_classes = (AllowAny,)

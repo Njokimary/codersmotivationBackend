@@ -8,4 +8,6 @@ def index(request):
     message="hello we are learning Django and we are enjoying it"
     return render(request,"index.html",{"message":message})
 
+def home(request):
+    return render(request,"home.html")
 
