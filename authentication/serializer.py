@@ -5,6 +5,8 @@ from rest_framework.authtoken.models import Token
 from authentication.models import User
 from django.contrib.auth import authenticate
 from rest_framework.response import Response
+from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 
 # class UserRegistrationSerializer(RegisterSerializer):
@@ -21,8 +23,7 @@ from rest_framework.response import Response
 #             user.save()
 #             return user
 
-from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
+
 # from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):

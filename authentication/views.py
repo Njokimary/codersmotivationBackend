@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from authentication.serializer import UserSerializer
 from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 
 
 # Create your views here.
@@ -35,7 +36,7 @@ def index(self):
 
 #     return user.manager
 
-from rest_framework.authtoken.models import Token
+
 
 class UserCreate(APIView):
     """ 
