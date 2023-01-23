@@ -20,7 +20,7 @@ class Post(models.Model):
   like = models.IntegerField(default=0)
 
   
-
+  objects = models.Manager()
 
   def __str__(self):
       return self.title
