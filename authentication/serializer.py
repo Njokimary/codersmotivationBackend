@@ -10,18 +10,18 @@ from rest_framework.validators import UniqueValidator
 
 
 # class UserRegistrationSerializer(RegisterSerializer):
-#     class Meta:
-#         model = settings.AUTH_USER_MODEL
-#         fields =('username', 'email','password','password2')
+    # class Meta:
+    #     model = settings.AUTH_USER_MODEL
+    #     fields =('username', 'email','password','password2')
 
-#         def get_cleaned_data(self):
-#             data = super(UserRegistrationSerializer,self).get_cleaned_data()
-#             return data
+    #     def get_cleaned_data(self):
+    #         data = super(UserRegistrationSerializer,self).get_cleaned_data()
+    #         return data
 
-#         def save(self, request):
-#             user = super(UserRegistrationSerializer)
-#             user.save()
-#             return user
+    #     def save(self, request):
+    #         user = super(UserRegistrationSerializer)
+    #         user.save()
+    #         return user
 
 
 # from django.contrib.auth.models import User
