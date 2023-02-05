@@ -2,10 +2,12 @@ from django.shortcuts import render
 import datetime
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Post as Post
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from .models import Post as Post, User
 from .models import Profile
 from rest_framework import status
-from .serializer import PostSerializer, ProfileSerializer
+from .serializer import PostSerializer, UpdateProfileView
 
 # Create your views here.
 
@@ -28,3 +30,32 @@ class Postapi(APIView):
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# class ProfileApi(APIView):
+#     def post(self, request, format=None):
+#         data=request.data
+#         id = data.id
+#         serializers = PostSerializer(data)
+        
+#         if serializers.is_valid():
+#             serializers.save()
+#             return Response(serializers.data, status=status.HTTP_201_CREATED)
+#         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+#     def get(self, request, format=None):
+#         id = serializer
+#         all_post = Post.objects.all()
+#         serializers = PostSerializer(all_post, many=True)
+#         return Response(serializers.data)
+
+
+        
+
+class UpdateProfileView(generics.UpdateAPIView):
+
+    queryset = User.objects.all()
+    # permission_classes = (IsAuthenticated,)
+    serializer_class = UpdateProfileView
