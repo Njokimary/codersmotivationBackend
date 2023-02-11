@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Post as Post, User
 from .models import Profile
 from rest_framework import status
-from .serializer import PostSerializer, UpdateProfileView
+from .serializer import PostSerializer, UserProfileSerializer
 
 # Create your views here.
 
@@ -55,7 +55,7 @@ class Postapi(APIView):
         
 
 class UpdateProfileView(generics.UpdateAPIView):
-
-    queryset = User.objects.all()
-    # permission_classes = (IsAuthenticated,)
-    serializer_class = UpdateProfileView
+    def post(self, request,pk, format=None):
+        queryset = User.objects.get(id==pk)
+        # permission_classes = (IsAuthenticated,)
+        serializer_class = UserProfileSerializer
