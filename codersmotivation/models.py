@@ -43,13 +43,13 @@ class Likes(models.Model):
     post =models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-class Profile(models.Model):
-    username = models.ForeignKey(User, on_delete=models.CASCADE)
-    avatar = CloudinaryField('image')
-    bio = models.TextField()
-    email = models.EmailField(default="@user.com")
-    # category =models.ForeignKey(Category, on_delete=models.CASCADE)
-    # post = models.ForeignKey(Post, on_delete=models.CASCADE)
+# class Profile(models.Model):
+#     username = models.ForeignKey(User, on_delete=models.CASCADE)
+#     avatar = CloudinaryField('image')
+#     bio = models.TextField()
+#     email = models.EmailField(default="@user.com")
+#     # category =models.ForeignKey(Category, on_delete=models.CASCADE)
+#     # post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
-    def __str__(self):
-      return self.name
+#     def __str__(self):
+#       return self.name

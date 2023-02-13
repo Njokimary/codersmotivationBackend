@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post, Profile
+from .models import Post
 from authentication.models import User
 from rest_framework.response import Response
 
@@ -8,10 +8,10 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = '__all__'
 
-class UpdateProfileView(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = '__all__'
+# class UpdateProfileView(serializers.ModelSerializer):
+#     class Meta:
+#         model = Profile
+#         fields = '__all__'
         
 
     # def validate_email(self, value):
@@ -40,21 +40,21 @@ class UpdateProfileView(serializers.ModelSerializer):
         #     raise serializers.ValidationError({"authorize": "You dont have permission for this user."})
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
-    """A serializer for our user profile objects."""
+# class UserProfileSerializer(serializers.ModelSerializer):
+#     """A serializer for our user profile objects."""
 
-    class Meta:
-        model = Profile
-        fields = ('avatar', 'email', 'username', 'bio')
-        # extra_kwargs = {'password': {'write_only': True}}
+#     class Meta:
+#         model = Profile
+#         fields = ('avatar', 'email', 'username', 'bio')
+#         # extra_kwargs = {'password': {'write_only': True}}
 
-    def create(self, validated_data):
-        """Create and return a new user."""
+#     def create(self, validated_data):
+#         """Create and return a new user."""
 
-        user = Profile(
-            email=validated_data['email'],
-            name=validated_data['username']
-        )
+#         user = Profile(
+#             email=validated_data['email'],
+#             name=validated_data['username']
+#         )
 
-        user.bio(validated_data['bio'])
-        user.save()
+#         user.bio(validated_data['bio'])
+#         user.save()
