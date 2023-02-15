@@ -48,3 +48,8 @@ class UserSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=50)
     password = serializers.CharField(max_length=50)
+
+class UserUpdateSerializer(serializers.Serializer):
+    avatar = serializers.CharField(max_length = 50)
+    bio = serializers.CharField(max_length = 100)
+    email = serializers.EmailField()

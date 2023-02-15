@@ -10,7 +10,7 @@ urlpatterns = [
     path('/login', views.LoginView.as_view(), name='login'),
     path('', views.index, name='index'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('/update_user/', views.User_Update.as_view() )
+    path('/update_user/<pk>/', views.User_Update.as_view() )
 ]
 
 

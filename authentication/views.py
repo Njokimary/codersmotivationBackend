@@ -8,8 +8,9 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import serializers
 from rest_framework import status
-from authentication.serializer import UserSerializer
-from django.contrib.auth.models import User
+from authentication.serializer import UserSerializer, UserUpdateSerializer
+# from django.contrib.auth.models import User
+from .models import User
 
 
 # Create your views here.
@@ -86,28 +87,17 @@ class LoginView(APIView):
 
 
 class User_Update(APIView):
-    def validate_email(self, value):
-        user = self.context['request'].user
-        if User.objects.exclude(pk=user.pk).filter(email=value).exists():
-            raise serializers.ValidationError({"email": "This email is already in use."})
-        return value
-
-    def validate_username(self, value):
-        user = self.context['request'].user
-        if User.objects.exclude(pk=user.pk).filter(username=value).exists():
-            raise serializers.ValidationError({"username": "This username is already in use."})
-        return value
+    def put(self,request, pk):
+        item = User.objects.get(pk=pk)
+        data = UserUpdateSerializer(instance=item, data=request.data)
     
-    def post(self, instance):
-        user = self.context['request'].user
-        instance.username = validated_data['username']
-        instance.avatar = validated_data['avatar']
-        instance.email = validated_data['email']
-        instance.bio = validated_data['bio']
-        instance.save()
-
-        return instance
-# if user.pk != instance.pk:
-#             raise serializers.ValidationError({"authorize": "You dont have permission for this user."})
+        if data.is_valid():
+            item.bio =request.data['bio']
+            item.avatar =request.data['avatar']
+            item.email =request.data['email']
+            item.save()
+            return Response(data.data)
+        else:
+            return Response("VALUES SUPPLIED NOT VALID", status=status.HTTP_404_NOT_FOUND)
 
 
