@@ -3,7 +3,7 @@ import datetime
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from .models import Post as Post, User
+from .models import Post as Post, User, Comment
 # from .models import Profile
 from rest_framework import status
 from .serializer import PostSerializer, CommentSerializer

@@ -10,14 +10,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 
-# class LikeSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Like
-#         fields = ('id', 'user', 'liked_object_id', 'created_at')
-#         read_only_fields = ('id', 'created_at')
 
-
-# serializers.py
 
 from rest_framework import serializers
 from .models import Post, Comment
