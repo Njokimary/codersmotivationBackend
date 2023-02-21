@@ -22,15 +22,18 @@ class Post(models.Model):
   
   objects = models.Manager()
 
+  def likes_count(self):
+       return self.like.all().count()
+
   def __str__(self):
       return self.title
 
 
   
 class Comment(models.Model):
-    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
-    name = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.TextField()
+    # post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     
     class Meta:
@@ -39,17 +42,14 @@ class Comment(models.Model):
     def __str__(self):
         return 'Comment {} by {}'.format(self.comment, self.name)
 
-class Likes(models.Model):
-    post =models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+# class Likes(models.Model):
+#     post =models.ForeignKey(Post, on_delete=models.CASCADE)
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-# class Profile(models.Model):
-#     username = models.ForeignKey(User, on_delete=models.CASCADE)
-#     avatar = CloudinaryField('image')
-#     bio = models.TextField()
-#     email = models.EmailField(default="@user.com")
-#     # category =models.ForeignKey(Category, on_delete=models.CASCADE)
-#     # post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    
+# class Like(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     liked_object_id = models.PositiveIntegerField()
+#     # liked_object_type = models.CharField(max_length=100)
+#     created_at = models.DateTimeField(auto_now_add=True)
 
-#     def __str__(self):
-#       return self.name

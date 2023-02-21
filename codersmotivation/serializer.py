@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post
+from .models import Post, Comment
 from authentication.models import User
 from rest_framework.response import Response
 
@@ -8,53 +8,28 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = '__all__'
 
-# class UpdateProfileView(serializers.ModelSerializer):
+
+
+# class LikeSerializer(serializers.ModelSerializer):
 #     class Meta:
-#         model = Profile
-#         fields = '__all__'
-        
-
-    # def validate_email(self, value):
-    #     user = self.context['request'].user
-    #     if User.objects.exclude(pk=user.pk).filter(email=value).exists():
-    #         raise serializers.ValidationError({"email": "This email is already in use."})
-    #     return value
-
-    # def validate_username(self, value):
-    #     user = self.context['request'].user
-    #     if User.objects.exclude(pk=user.pk).filter(username=value).exists():
-    #         raise serializers.ValidationError({"username": "This username is already in use."})
-    #     return value
-                
-    # def update(self, instance, validated_data):
-    #     user = self.context['request'].user
-    #     instance.username = validated_data['username']
-    #     instance.avatar = validated_data['avatar']
-    #     instance.email = validated_data['email']
-    #     instance.bio = validated_data['bio']
-
-    #     instance.save()
-
-    #     return instance
-# if user.pk != instance.pk:
-        #     raise serializers.ValidationError({"authorize": "You dont have permission for this user."})
+#         model = Like
+#         fields = ('id', 'user', 'liked_object_id', 'created_at')
+#         read_only_fields = ('id', 'created_at')
 
 
-# class UserProfileSerializer(serializers.ModelSerializer):
-#     """A serializer for our user profile objects."""
+# serializers.py
 
-#     class Meta:
-#         model = Profile
-#         fields = ('avatar', 'email', 'username', 'bio')
-#         # extra_kwargs = {'password': {'write_only': True}}
+from rest_framework import serializers
+from .models import Post, Comment
 
-#     def create(self, validated_data):
-#         """Create and return a new user."""
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ('id', 'title', 'content', 'likes')
 
-#         user = Profile(
-#             email=validated_data['email'],
-#             name=validated_data['username']
-#         )
 
-#         user.bio(validated_data['bio'])
-#         user.save()
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('id', 'author', 'text', 'created_at')
+        read_only_fields = ('id', 'created_at')
