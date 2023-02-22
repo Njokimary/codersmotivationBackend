@@ -64,18 +64,26 @@ class UnlikeView(generics.UpdateAPIView):
         return Response(serializer.data)
 
 
-class CommentAPIView(generics.GenericAPIView):
-    permission_classes = (IsAuthenticated,)
+# class CommentAPIView(generics.GenericAPIView):
+class CommentAPIView(generics.CreateAPIView):
+    # permission_classes = (IsAuthenticated,)
+    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        author = request.user
+        author = User.id
         text = serializer.validated_data.get('text')
 
         comment = Comment(author=author, text=text)
         comment.save()
 
         return Response({'detail': 'Comment created.', 'comment': self.serializer_class(comment).data}, status=status.HTTP_201_CREATED)
+
+
+# class CommentAPIView(generics.CreateAPIView):
+#     queryset = Comment.objects.all()
+#     serializer_class = CommentSerializer
+#     permission_classes = (IsAuthenticated,)
