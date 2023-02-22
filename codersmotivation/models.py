@@ -25,13 +25,14 @@ class Post(models.Model):
   def likes_count(self):
        return self.like.all().count()
 
+
   def __str__(self):
       return self.title
 
 
   
 class Comment(models.Model):
-    # post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
+    post = models.ForeignKey(Post,on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
@@ -42,25 +43,5 @@ class Comment(models.Model):
     def __str__(self):
         return 'Comment {} by {}'.format(self.comment, self.name)
 
-# class Comment(models.Model):
-#     author = models.ForeignKey(User, on_delete=models.CASCADE)
-#     text = models.TextField()
-#     created_on = models.DateTimeField(auto_now_add=True)
-    
-#     class Meta:
-#         ordering = ['created_on']
 
-#     def __str__(self):
-#         return 'Comment "{}" by {}'.format(self.text, self.author)
-
-# class Likes(models.Model):
-#     post =models.ForeignKey(Post, on_delete=models.CASCADE)
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    
-# class Like(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     liked_object_id = models.PositiveIntegerField()
-#     # liked_object_type = models.CharField(max_length=100)
-#     created_at = models.DateTimeField(auto_now_add=True)
 

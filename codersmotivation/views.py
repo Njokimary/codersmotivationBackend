@@ -27,6 +27,9 @@ class Postapi(APIView):
     def get(self, request, format=None):
         all_post = Post.objects.all()
         serializers = PostSerializer(all_post, many=True)
+
+        # post_comments = Comment.objects.filter(post =)
+
         return Response(serializers.data)
 
     def post(self, request, format=None):
@@ -74,11 +77,14 @@ class CommentAPIView(generics.CreateAPIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        author = User.id
+        post = serializer.validated_data.get('post' )
+        author = serializer.validated_data.get('author')
         text = serializer.validated_data.get('text')
 
-        comment = Comment(author=author, text=text)
+        comment = Comment(author=author, text=text, post = post)
         comment.save()
+
+
 
         return Response({'detail': 'Comment created.', 'comment': self.serializer_class(comment).data}, status=status.HTTP_201_CREATED)
 
