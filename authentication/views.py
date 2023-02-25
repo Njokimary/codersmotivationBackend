@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import serializers
 from rest_framework import status
-from authentication.serializer import UserSerializer, UserUpdateSerializer
+from authentication.serializer import UserSerializer, UserUpdateSerializer, UserDisplaySerializer
 # from django.contrib.auth.models import User
 from .models import User
 
@@ -99,5 +99,15 @@ class User_Update(APIView):
             return Response(data.data)
         else:
             return Response("VALUES SUPPLIED NOT VALID", status=status.HTTP_404_NOT_FOUND)
+
+class UserDisplay(APIView):
+    
+    def get(self, request):
+        users = User.objects.all()
+        serializers = UserDisplaySerializer(users, many=True)
+
+        return Response(serializers.data)
+
+
 
 

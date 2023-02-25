@@ -54,7 +54,7 @@ class UserUpdateSerializer(serializers.Serializer):
     bio = serializers.CharField(max_length = 100)
     email = serializers.EmailField()
 
-class UserDisplaySerializer(serializers.Serializer):
+class UserDisplaySerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
