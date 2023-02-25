@@ -53,3 +53,10 @@ class UserUpdateSerializer(serializers.Serializer):
     avatar = serializers.CharField(max_length = 50)
     bio = serializers.CharField(max_length = 100)
     email = serializers.EmailField()
+
+class UserDisplaySerializer(serializers.Serializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+        
+
