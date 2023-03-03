@@ -4,14 +4,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from .models import Post as Post, User, Comment
-# from .models import Profile
 from rest_framework import status
 from .serializer import PostSerializer, CommentSerializer
-
 from rest_framework import generics, status
 from rest_framework.exceptions import ValidationError
 from django.contrib.contenttypes.models import ContentType
-# from .models import Like
 from .serializer import LikeSerializer
 
 # Create your views here.
@@ -27,9 +24,6 @@ class Postapi(APIView):
     def get(self, request, format=None):
         all_post = Post.objects.all()
         serializers = PostSerializer(all_post, many=True)
-
-        # post_comments = Comment.objects.filter(post =)
-
         return Response(serializers.data)
 
     def post(self, request, format=None):
@@ -67,9 +61,7 @@ class UnlikeView(generics.UpdateAPIView):
         return Response(serializer.data)
 
 
-# class CommentAPIView(generics.GenericAPIView):
 class CommentAPIView(generics.CreateAPIView):
-    # permission_classes = (IsAuthenticated,)
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
