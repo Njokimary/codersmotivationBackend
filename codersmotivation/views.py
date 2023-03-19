@@ -64,6 +64,10 @@ class UnlikeView(generics.UpdateAPIView):
 class CommentAPIView(generics.CreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    def get(self, request, pk):
+        post_comment = Comment.objects.filter(post =pk)
+        serializers = CommentSerializer(post_comment, many=True)
+        return Response(serializers.data)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)

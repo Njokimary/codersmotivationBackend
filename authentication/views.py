@@ -111,3 +111,12 @@ class UserDisplay(APIView):
 
 
 
+class User_Delete(APIView):
+    def delete(self,request, pk):
+        item = User.objects.get(id=pk)
+        
+        if item :
+            item.delete()
+            return Response("user deleted")
+        else:
+            return Response("user not found", status=status.HTTP_404_NOT_FOUND)
