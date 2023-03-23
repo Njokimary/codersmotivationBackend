@@ -9,10 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('username',)
 
 class PostSerializer(serializers.ModelSerializer):
-    # class Meta:
-    #     model = Post
-    #     fields = '__all__'
-
+    
     comments = serializers.SerializerMethodField()
     
     class Meta:
@@ -31,8 +28,6 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 
-from rest_framework import serializers
-from .models import Post, Comment
 
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,14 +35,12 @@ class LikeSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'content', 'likes')
 
 
-# class CommentSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Comment
-#         fields = ('id', 'author', 'text', 'created_at')
-#         read_only_fields = ('id', 'created_at')
+
 
 class CommentSerializer(serializers.ModelSerializer):
+    author = UserSerializer(read_only=True)
     class Meta:
         model = Comment
         fields = ('id', 'author','post', 'text', 'created_on')
-        read_only_fields = ('id', 'created_on')
+        # read_only_fields = ('id', 'created_on','author')
+        
