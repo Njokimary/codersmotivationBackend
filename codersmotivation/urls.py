@@ -10,4 +10,5 @@ urlpatterns = [
     path('comments/<int:pk>', views.CommentAPIView.as_view(), name='comment_api_get'),
     path('posts/<int:pk>/like/', LikeView.as_view()),
     path('posts/<int:pk>/unlike/', UnlikeView.as_view()),
+    path('posts/', views.post_list, name='post_list'),
 ]

@@ -10,13 +10,13 @@ class Category(models.Model):
       return self.category
 
 class Post(models.Model):
-  category = models.ForeignKey(Category, on_delete=models.CASCADE)
+  category = models.ForeignKey(Category,related_name='post_category', on_delete=models.CASCADE)
   title =models.CharField(max_length=20)
   image = CloudinaryField('image')
   video = CloudinaryField('video')
   content =models.TextField()
   time_posted =models.DateTimeField(auto_now_add=True)
-  author = models.ForeignKey(User, on_delete=models.CASCADE)
+  author = models.ForeignKey(User,related_name='post_author', on_delete=models.CASCADE)
   like = models.IntegerField(default=0)
 
   
@@ -32,8 +32,8 @@ class Post(models.Model):
 
   
 class Comment(models.Model):
-    post = models.ForeignKey(Post,on_delete=models.CASCADE)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post,related_name='comments',on_delete=models.CASCADE)
+    author = models.ForeignKey(User,related_name="commented_by", on_delete=models.CASCADE)
     text = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     

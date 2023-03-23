@@ -3,11 +3,30 @@ from .models import Post, Comment
 from authentication.models import User
 from rest_framework.response import Response
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username',)
+
 class PostSerializer(serializers.ModelSerializer):
+    # class Meta:
+    #     model = Post
+    #     fields = '__all__'
+
+    comments = serializers.SerializerMethodField()
+    
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ('id', 'title', 'content', 'comments', 'author')
 
+    author = UserSerializer(read_only=True)
+        
+    def get_comments(self, post):
+        comments = post.comments.all()
+        serializer = CommentSerializer(comments, many=True)
+        return serializer.data
+
+    
 
 
 

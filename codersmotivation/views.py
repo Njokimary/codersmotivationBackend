@@ -10,6 +10,7 @@ from rest_framework import generics, status
 from rest_framework.exceptions import ValidationError
 from django.contrib.contenttypes.models import ContentType
 from .serializer import LikeSerializer
+from rest_framework.decorators import api_view
 
 # Create your views here.
 
@@ -21,10 +22,24 @@ def index(request):
 
 
 class Postapi(APIView):
-    def get(self, request, format=None):
-        all_post = Post.objects.all()
-        serializers = PostSerializer(all_post, many=True)
-        return Response(serializers.data)
+    # def get(self, request, format=None):
+    #     # all_post = Post.objects.all()
+    #     # serializers = PostSerializer(all_post, many=True)
+
+
+    #     posts = Post.objects.all()
+    #     data = []
+    #     for post in posts:
+    #         comments = Comment.objects.filter(post=post)
+    #         data.append({
+    #             'id': post.id,
+    #             'title': post.title,
+    #             'content': post.content,
+    #             'comments': [{'id': comment.id, 'text': comment.text} for comment in comments]
+    #         })
+
+
+    #     return Response(serializers.data)
 
     def post(self, request, format=None):
         serializers = PostSerializer(data=request.data)
@@ -34,6 +49,13 @@ class Postapi(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+@api_view(['GET'])
+def post_list(request):
+    posts = Post.objects.all()
+   
+    serializer = PostSerializer(posts, many=True)
+    return Response(serializer.data)
 
 
 
