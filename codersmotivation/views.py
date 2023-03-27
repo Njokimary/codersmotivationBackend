@@ -58,6 +58,18 @@ def post_list(request):
     return Response(serializer.data)
 
 
+class Post_Delete(APIView):
+    def delete(self,request, pk):
+        item = Post.objects.get(id=pk)
+        
+        if item :
+            item.delete()
+            return Response("post deleted")
+        else:
+            return Response("post not found", status=status.HTTP_404_NOT_FOUND)
+
+
+
 
 
 class LikeView(generics.UpdateAPIView):
@@ -107,7 +119,3 @@ class CommentAPIView(generics.CreateAPIView):
         return Response({'detail': 'Comment created.', 'comment': self.serializer_class(comment).data}, status=status.HTTP_201_CREATED)
 
 
-# class CommentAPIView(generics.CreateAPIView):
-#     queryset = Comment.objects.all()
-#     serializer_class = CommentSerializer
-#     permission_classes = (IsAuthenticated,)
