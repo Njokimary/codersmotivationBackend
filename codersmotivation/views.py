@@ -44,7 +44,8 @@ class Postapi(APIView):
     def post(self, request, format=None):
         serializers = PostSerializer(data=request.data)
         if serializers.is_valid():
-            serializers.save()
+            serializers.save(author_id=self.request.data.get('author_id'))
+            
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -103,19 +104,11 @@ class CommentAPIView(generics.CreateAPIView):
         serializers = CommentSerializer(post_comment, many=True)
         return Response(serializers.data)
 
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        post = serializer.validated_data.get('post' )
-        author = serializer.validated_data.get('author')
-        text = serializer.validated_data.get('text')
-
-        comment = Comment(author=author, text=text, post = post)
-        comment.save()
-
-
-
-        return Response({'detail': 'Comment created.', 'comment': self.serializer_class(comment).data}, status=status.HTTP_201_CREATED)
-
-
+   
+    def post(self, request, format=None):
+        serializers = CommentSerializer(data=request.data)
+        if serializers.is_valid():
+            serializers.save(author_id=self.request.data.get('author'))
+            
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)

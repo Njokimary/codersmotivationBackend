@@ -11,7 +11,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('update_user/<pk>/', views.User_Update.as_view() ),
-    path('all_users/', views.UserDisplay.as_view() ),
+    path('/all_users/', views.UserDisplay.as_view() ),
     path('user_delete/<pk>/', views.User_Delete.as_view() ),
 ]
 
